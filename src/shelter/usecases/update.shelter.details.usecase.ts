@@ -18,7 +18,9 @@ export default class UpdateShelterDetailsUseCase
     private readonly shelterRepository: IShelterRepository,
   ) {}
 
-  async run(input: UpdateShelterDetailsUseCaseInput,): Promise<UpdateShelterDetailsUseCaseOutput> {
+  async run(
+    input: UpdateShelterDetailsUseCaseInput,
+  ): Promise<UpdateShelterDetailsUseCaseOutput> {
     await this.shelterRepository.update(input);
 
     const shelter = await this.shelterRepository.get();
