@@ -6,8 +6,7 @@ export type PetDocument = HydratedDocument<Pet>;
 @Schema({ versionKey: false })
 export class Pet {
   @Prop({ required: true, auto: true, type: mongoose.Schema.Types.ObjectId })
-  _id: String;
-
+  _id: string;
   @Prop({ required: true })
   name: string;
   @Prop({ required: true })
@@ -18,12 +17,12 @@ export class Pet {
   gender: string;
   @Prop({ required: true })
   bio: string;
-  @Prop({ required: true })
+  @Prop({ required: false, default: null })
   photo: string;
   @Prop({ required: true })
   createdAt: Date;
   @Prop({ required: true })
-  updatedAt: string;
+  updatedAt: Date;
 }
 
 export const PetSchema = SchemaFactory.createForClass(Pet);
