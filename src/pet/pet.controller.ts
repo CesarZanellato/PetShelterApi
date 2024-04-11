@@ -82,7 +82,7 @@ export class PetController {
   }
 
   @Delete(':id')
-  async deletePet(@Param('id') id: string) {
+  async deletePet(@Param('id') id: string): Promise<DeletePetByIdUseCaseOutput>{
     
     try {
       const useCaseInput = new DeletePetByIdUseCaseInput({ id });
@@ -92,4 +92,6 @@ export class PetController {
       throw new BadRequestException(JSON.parse(error.message));
     }
   }
+
+
 }
