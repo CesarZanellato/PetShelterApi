@@ -6,8 +6,12 @@ import {
   Get,
   Inject,
   Param,
+  Patch,
   Post,
   Put,
+  Query,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { IUseCase } from 'src/domain/iusecase.interface';
 import PetTokens from './pet.tokens';
@@ -21,6 +25,11 @@ import UpdatePetByIdUseCaseInput from './usecases/dtos/update.pet.by.id.usecase.
 import UpdatePetByIdUseCaseOutput from './usecases/dtos/update.pet.by.id.usecase.output';
 import DeletePetByIdUseCaseInput from './dtos/delete.pet.by.id.usecase.input';
 import DeletePetByIdUseCaseOutput from './dtos/delete.pet.by.id.usecase.output';
+import { FileInterceptor } from '@nestjs/platform-express';
+import multerConfig from 'src/config/multer.config';
+import UpdatePetPhotoByIdUseCaseInput from './usecases/dtos/update.pet.photo.by.id.usecase.input';
+import UpdatePetPhotoByIdUseCaseOutput from './usecases/dtos/update.pet.photo.by.id.usecase.output';
+import GetPetsUseCaseInput from './usecases/dtos/get.pets.usecase.input';
 
 @Controller('pet')
 export class PetController {
@@ -33,6 +42,12 @@ export class PetController {
   private readonly deletePetByIdUseCase: IUseCase<
     DeletePetByIdUseCaseInput,
     DeletePetByIdUseCaseOutput
+  >;
+
+  @Inject(PetTokens.updatePetPhotoByIdUseCase)
+  private readonly updatePetPhotoByIdUseCase: IUseCase<
+    UpdatePetPhotoByIdUseCaseInput,
+    UpdatePetPhotoByIdUseCaseOutput
   >;
 
   @Inject(PetTokens.getPetByIdUseCase)
@@ -53,6 +68,25 @@ export class PetController {
   ): Promise<CreatePetUseCaseOutput> {
     const usecaseInput = new CreatePetUseCaseInput({ ...input });
     return await this.createPetUseCase.run(usecaseInput);
+  }
+
+  @Get()
+  async getPets(
+    @Query('type') type?: string,
+    @Query('size') size?: string,
+    @Query('gender') gender?: string,
+    @Query('page') page?: string,
+    @Query('itemsPerPage') itemsPerPage?: string,
+  ) {
+    const FIRST_PAGE = 1;
+    const DEFAULT_ITENS_PER_PAGE = 10;
+    const useCaseInput = new GetPetsUseCaseInput({
+      type: !!type ? type : null,
+      size: !!size ? size : null,
+      gender: !!gender ? gender : null,
+      page: !!page ? parseInt(page) : FIRST_PAGE,
+      itemsPerPage: !!itemsPerPage ? parseInt(itemsPerPage) : DEFAULT_ITENS_PER_PAGE,
+    })
   }
 
   @Get(':id')
@@ -82,16 +116,31 @@ export class PetController {
   }
 
   @Delete(':id')
-  async deletePet(@Param('id') id: string): Promise<DeletePetByIdUseCaseOutput>{
-    
+  async deletePet(
+    @Param('id') id: string,
+  ): Promise<DeletePetByIdUseCaseOutput> {
     try {
       const useCaseInput = new DeletePetByIdUseCaseInput({ id });
       return await this.deletePetByIdUseCase.run(useCaseInput);
-    } 
-    catch (error) {
+    } catch (error) {
       throw new BadRequestException(JSON.parse(error.message));
     }
   }
 
-
+  @Patch(':id/photo')
+  @UseInterceptors(FileInterceptor('photo', multerConfig))
+  async updatePhoto(
+    @UploadedFile() photo: Express.Multer.File,
+    @Param('id') id: string,
+  ): Promise<UpdatePetPhotoByIdUseCaseOutput> {
+    try {
+      const usecaseInput = new UpdatePetPhotoByIdUseCaseInput({
+        id,
+        photoPath: photo.path,
+      });
+      return await this.updatePetPhotoByIdUseCase.run(usecaseInput);
+    } catch (error) {
+      throw new BadRequestException(JSON.parse(error.message));
+    }
+  }
 }
