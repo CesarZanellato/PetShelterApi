@@ -7,5 +7,5 @@ export default class GetPetsUseCaseInput{
 
     constructor(data: Partial<GetPetsUseCaseInput>){
         Object.assign(this, data)
-    }
+    }    
 }
