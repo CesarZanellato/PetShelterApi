@@ -28,7 +28,7 @@ export default class GetPetByIdUseCase
       throw new PetNotFoundError()
     }
 
-    const getPhoto = !!pet.photo ? (await this.fileService.readFile(pet.photo)).toString('base64') : null;
+    const petPhoto = !!pet.photo ? (await this.fileService.readFile(pet.photo)).toString('base64') : null;
 
     return new GetPetByIdUseCaseOutput({
       id: pet._id,
@@ -37,7 +37,7 @@ export default class GetPetByIdUseCase
       size: pet.size,
       gender: pet.gender,
       bio: pet.bio,
-      photo: pet.photo,
+      photo: petPhoto,
       createdAt: pet.createdAt,
       updatedAt: pet.updatedAt,
     });

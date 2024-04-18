@@ -19,7 +19,7 @@ export default class PetResponse{
            size: data.size,
            gender: data.gender,
            bio: data.bio,
-           photo: data.bio,
+           photo: data.photo,
            createdAt: data.createdAt,
            updatedAt: data.updatedAt,
         });
