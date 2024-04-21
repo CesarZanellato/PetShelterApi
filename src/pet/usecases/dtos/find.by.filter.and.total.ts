@@ -1,4 +1,4 @@
-import { Pet } from "src/pet/schemas/pet.schemas";
+import { Pet } from "src/pet/schemas/pet.schema";
 
 export default class FindByFilterAndTotal {
   items: Pet[];

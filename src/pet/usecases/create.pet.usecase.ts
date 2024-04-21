@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { IUseCase } from 'src/domain/iusecase.interface';
-import CreatePetUseCaseOutput from './create.pet.usecase.output';
-import CreatePetUseCaseInput from './create.pet.usecase.input';
+import CreatePetUseCaseOutput from './dtos/create.pet.usecase.output';
+import CreatePetUseCaseInput from './dtos/create.pet.usecase.input';
 import IPetRepository from '../interfaces/pet.repository.interface';
 import PetTokens from '../pet.tokens';
 

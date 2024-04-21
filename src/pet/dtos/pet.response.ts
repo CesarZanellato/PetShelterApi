@@ -1,4 +1,4 @@
-import { Pet } from "../schemas/pet.schemas";
+import { Pet } from "../schemas/pet.schema";
 
 export default class PetResponse{
     id: string;

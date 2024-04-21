@@ -4,8 +4,8 @@ import UpdatePetByIdUseCaseInput from './dtos/update.pet.by.id.usecase.input';
 import { Inject, Injectable } from '@nestjs/common';
 import IPetRepository from '../interfaces/pet.repository.interface';
 import PetTokens from '../pet.tokens';
-import { Pet } from '../schemas/pet.schemas';
-import PetNotFoundError from 'src/domain/errors/pet.not.found.errors';
+import { Pet } from '../schemas/pet.schema';
+import PetNotFoundError from 'src/domain/error/pet.not.found.error';
 
 @Injectable()
 export default class UpdatePetByIdUseCase

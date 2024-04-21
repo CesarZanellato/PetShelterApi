@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import IPetRepository from './interfaces/pet.repository.interface';
-import { Pet } from './schemas/pet.schemas';
+import { Pet } from './schemas/pet.schema';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import GetPetsUseCaseInput from './usecases/dtos/get.pets.usecase.input';

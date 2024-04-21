@@ -1,4 +1,4 @@
-import CreatePetUseCaseOutput from "../create.pet.usecase.output"
+import CreatePetUseCaseOutput from "./create.pet.usecase.output"
 
 export default class UpdatePetPhotoByIdUseCaseOutput extends CreatePetUseCaseOutput{
     

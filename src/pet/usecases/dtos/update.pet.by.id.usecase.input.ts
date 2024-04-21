@@ -1,4 +1,4 @@
-import CreatePetUseCaseInput from '../create.pet.usecase.input';
+import CreatePetUseCaseInput from './create.pet.usecase.input';
 
 export default class UpdatePetByIdUseCaseInput extends CreatePetUseCaseInput {
   id: string;
