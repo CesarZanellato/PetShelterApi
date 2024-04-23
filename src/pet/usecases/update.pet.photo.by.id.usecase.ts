@@ -8,6 +8,7 @@ import AppTokens from "src/app.tokens";
 import IFileService from "../../interfaces/file.service.interface";
 import PetNotFoundError from "src/domain/error/pet.not.found.error";
 import { Pet } from "../schemas/pet.schema";
+
 @Injectable()
 export default class UpdatePetByIdUseCase implements IUseCase<UpdatePetByIdUseCaseInput, UpdatePetByIdUseCaseOutput> {
 
